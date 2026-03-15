@@ -1,4 +1,4 @@
-# flutter_application_1
+# Mini Project 2 PAB
 
 A new Flutter project.
 
