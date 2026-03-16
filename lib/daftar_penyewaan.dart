@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'form_penyewaan.dart';
+import 'login.dart';
 import 'penyewaan.dart';
 
 class DaftarPenyewaan extends StatelessWidget {
@@ -25,11 +28,32 @@ class DaftarPenyewaan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final pageBg = isDark ? const Color(0xFF241A22) : const Color(0xFFE9C1D4);
+    final appBarBg = isDark ? const Color(0xFF2F2330) : const Color(0xFFF1ECEF);
+    final cardBg = isDark ? const Color(0xFF3A2D3A) : const Color(0xFFE8DEE4);
+    final textColor = isDark ? const Color(0xFFF1DFE8) : const Color(0xFF4C3A45);
+    final accentColor =
+        isDark ? const Color(0xFFE7A1C5) : const Color(0xFF7E4C69);
+    final borderColor =
+        isDark ? const Color(0xFF5D4A5C) : const Color(0xFFCCBEC7);
+    final shadowColor = isDark ? Colors.black54 : Colors.black26;
 
     return Scaffold(
+      backgroundColor: pageBg,
       appBar: AppBar(
-        title: const Text("Daftar Penyewaan"),
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: Text(
+          "Daftar Penyewaan",
+          style: GoogleFonts.poppins(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        backgroundColor: appBarBg,
+        foregroundColor: textColor,
+        elevation: 0,
         actions: [
           IconButton(
             onPressed: () {
@@ -46,10 +70,16 @@ class DaftarPenyewaan extends StatelessWidget {
       ),
       body: Obx(() {
         if (controller.penyewaanList.isEmpty) {
-          return const Center(child: Text("Belum ada data penyewaan"));
+          return Center(
+            child: Text(
+              "Belum ada data penyewaan",
+              style: TextStyle(color: textColor),
+            ),
+          );
         }
 
         return ListView.builder(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           itemCount: controller.penyewaanList.length,
           itemBuilder: (context, index) {
             final data = controller.penyewaanList[index];
@@ -65,19 +95,32 @@ class DaftarPenyewaan extends StatelessWidget {
             );
 
             return Card(
-              color: colorScheme.surfaceContainerLow,
-              margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              color: cardBg,
+              elevation: 3,
+              shadowColor: shadowColor,
+              margin: const EdgeInsets.symmetric(vertical: 6),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+                side: BorderSide(color: borderColor, width: 0.8),
+              ),
               child: ListTile(
-                title: Text(nama),
+                title: Text(
+                  nama,
+                  style: TextStyle(
+                    color: textColor,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 subtitle: Text(
                   "$tanggal\n$kegiatan",
+                  style: TextStyle(color: textColor),
                 ),
                 isThreeLine: true,
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.edit, color: Colors.blue),
+                      icon: Icon(Icons.edit, color: accentColor),
                       onPressed: () {
                         if (id != null) {
                           _showEditDialog(context, id, data);
@@ -85,7 +128,7 @@ class DaftarPenyewaan extends StatelessWidget {
                       },
                     ),
                     IconButton(
-                      icon: const Icon(Icons.delete, color: Colors.red),
+                      icon: const Icon(Icons.delete, color: Colors.redAccent),
                       onPressed: () async {
                         if (id == null) return;
                         final errorMessage = await controller.hapusPenyewaan(id);
@@ -107,6 +150,36 @@ class DaftarPenyewaan extends StatelessWidget {
           },
         );
       }),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 1,
+        onTap: (index) async {
+          if (index == 0) {
+            Get.off(() => FormPenyewaan());
+            return;
+          }
+          if (index == 2) {
+            await controller.supabase.auth.signOut();
+            Get.offAll(() => LoginPage());
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            activeIcon: Icon(Icons.home),
+            label: "Form",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list_alt_outlined),
+            activeIcon: Icon(Icons.list_alt),
+            label: "Daftar",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.logout_outlined),
+            activeIcon: Icon(Icons.logout),
+            label: "Logout",
+          ),
+        ],
+      ),
     );
   }
 
