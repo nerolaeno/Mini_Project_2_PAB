@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'login.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -70,7 +71,13 @@ class RegisterPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text("Register"),
+        title: Text(
+          "Register",
+          style: GoogleFonts.poppins(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         centerTitle: true,
         actions: [
           IconButton(

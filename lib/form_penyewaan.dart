@@ -13,6 +13,32 @@ class FormPenyewaan extends StatelessWidget {
   final PenyewaanController controller = Get.put(PenyewaanController());
   final _formKey = GlobalKey<FormState>();
 
+  Future<bool> _confirmLogout(BuildContext context) async {
+    final result = await Get.dialog<bool>(
+      AlertDialog(
+        title: Text(
+          "Konfirmasi",
+          style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+        ),
+        content: Text(
+          "apakah anda yakin ingin logout?",
+          style: GoogleFonts.poppins(),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(result: false),
+            child: Text("Batal", style: GoogleFonts.poppins()),
+          ),
+          ElevatedButton(
+            onPressed: () => Get.back(result: true),
+            child: Text("Lanjutkan", style: GoogleFonts.poppins()),
+          ),
+        ],
+      ),
+    );
+    return result ?? false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -237,6 +263,8 @@ class FormPenyewaan extends StatelessWidget {
             return;
           }
           if (index == 2) {
+            final confirmed = await _confirmLogout(context);
+            if (!confirmed) return;
             await controller.supabase.auth.signOut();
             Get.offAll(() => LoginPage());
           }
