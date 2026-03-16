@@ -1,16 +1,54 @@
 # Mini Project 2 PAB
 
-A new Flutter project.
+**A. Deskripsi Aplikasi**  
+Aplikasi ini adalah aplikasi manajemen penyewaan gedung berbasis Flutter yang terhubung ke Supabase. Pengguna dapat login/register, lalu mengelola data penyewaan (nama penyewa, tanggal penyewaan, dan kegiatan acara) dengan operasi CRUD.
 
-## Getting Started
+**B. Fitur Aplikasi**  
+1. Autentikasi pengguna dengan Supabase Auth:
+  - Register akun 
+  - Login akun
+  - Logout
+2. Manajemen data penyewaan ke Supabase:
+  - Tambah data penyewaan
+  - Lihat daftar data penyewaan
+  - Edit data penyewaan
+  - Hapus data penyewaan
+3 Navigasi antar halaman:
+  - Halaman form penyewaan
+  - Halaman daftar penyewaan
+4. Validasi input form (field wajib dan minimal karakter tertentu)
+5. Dukungan tema light mode dan dark mode (dengan toggle tema)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**C. Widget yang Digunakan**  
+- `GetMaterialApp`
+- `Scaffold`
+- `AppBar`
+- `IconButton`
+- `BottomNavigationBar`
+- `BottomNavigationBarItem`
+- `Container`
+- `Card`
+- `Padding`
+- `SizedBox`
+- `SingleChildScrollView`
+- `ConstrainedBox`
+- `Column`
+- `Row`
+- `Stack`
+- `Positioned`
+- `Center`
+- `Form`
+- `GlobalKey<FormState>`
+- `TextFormField`
+- `TextField`
+- `InputDecoration`
+- `OutlineInputBorder`
+- `ElevatedButton`
+- `TextButton`
+- `ListView.builder`
+- `ListTile`
+- `AlertDialog`
+- `Image.asset`
+- `Text`
+- `Icon`
+- `Obx` (GetX reactive widget)
